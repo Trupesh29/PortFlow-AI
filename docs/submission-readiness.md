@@ -9,26 +9,26 @@
 - Relevant IBM Bob IDE task reports and usage screenshots stored in `bob_sessions/`.
 - No credentials, client data, personal information, confidential data, or social-media data committed.
 
-## Current Status - 12 September 2026
+## Current Status — 12 September 2026
 
 | Area | Status | Evidence or next action |
 |---|---|---|
 | Problem selection | Complete | L1 Port Congestion Predictor and Operations Optimiser |
-| Official local structure | Complete | Required template paths now exist |
-| Application skeleton | Complete | FastAPI health endpoint and React shell |
-| Database foundation | Not started | Implement models, Alembic, and tests |
-| Synthetic dataset | Not started | Add seeded generator and provenance |
-| ML prediction | Not started | Train, evaluate, persist, and test real models |
-| Optimiser | Not started | Add runtime CP-SAT assignments and comparison |
-| IBM Bob MCP tools | Not started | Add safe read/explanation tools after APIs exist |
+| Official local structure | Complete | All app code under `src/`; `src/README.md` and `src/.env.example` present |
+| Application skeleton | Complete | FastAPI health endpoint and React shell verified |
+| Database foundation | Not started | Implement models, Alembic, and tests in `src/database/` |
+| Synthetic dataset | Not started | Add seeded generator in `src/data/` |
+| ML prediction | Not started | Train, evaluate, persist, and test real models in `src/ml/` |
+| Optimiser | Not started | Add runtime CP-SAT assignments in `src/optimizer/` |
+| IBM Bob MCP tools | Not started | Add safe read/explanation tools in `src/mcp-server/` after APIs exist |
 | Demo deployment | Not started | Add URL or record local demo |
-| Demo video | Blocked on working journey | Replace placeholder with public link |
-| Screenshots | Blocked on working UI | Add at least three final-state images |
+| Demo video | Blocked on working journey | Replace placeholder in `demo/demo-video-link.txt` |
+| Screenshots | Blocked on working UI | Add at least three final-state images to `demo/screenshots/` |
 | Presentation | Not started | Add `presentation/slides.pdf` or `.pptx` |
-| Bob session evidence | Requires IBM Bob IDE | Export real histories and usage screenshots |
-| GitHub template repository | Requires GitHub action | Create public repo with official template and use compliant name |
-| GitHub validation | Blocked by manual artifacts | Confirm green after video and metadata are final |
-| Submission form | Time-gated | Submit 15 September 2026, 12:00 PM-11:45 PM |
+| Bob session evidence | Requires IBM Bob IDE | Export real histories and usage screenshots to `bob_sessions/` |
+| GitHub template repository | Requires GitHub action | Create public repo with official template; name: `bob-ai-hackathon-portflow-ai` |
+| GitHub validation | Blocked by demo video link | Confirm green after video URL is added |
+| Submission form | Time-gated | Submit 15 September 2026, 12:00 PM–11:45 PM |
 
 ## Deadline Priorities
 

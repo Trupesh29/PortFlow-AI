@@ -90,6 +90,13 @@ cd src
 python -m pytest backend\tests -q
 ```
 
+This runs the health-check unit test. Expected output:
+
+```
+.
+1 passed in ...s
+```
+
 Frontend:
 
 ```powershell

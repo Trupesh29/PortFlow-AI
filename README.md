@@ -50,12 +50,16 @@ The repository currently contains the contract-first architecture, a working Fas
 .
 |-- submission.yaml            # Evaluator metadata
 |-- src/                       # All application source code
+|   |-- backend/               # FastAPI modular monolith
 |   |-- frontend/              # React operations workspace
-|   |-- backend/               # FastAPI application
-|   |-- database/              # Database models and migrations
-|   |-- ml/                    # Training and inference
-|   |-- optimizer/             # Berth/crane solver
-|   `-- mcp-server/            # IBM Bob MCP tools
+|   |-- database/              # SQLAlchemy models and Alembic migrations
+|   |-- ml/                    # Training scripts and inference pipeline
+|   |-- optimizer/             # OR-Tools CP-SAT berth/crane solver
+|   |-- mcp-server/            # IBM Bob MCP tool definitions
+|   |-- data/                  # Synthetic data generator and seed files
+|   |-- tests/                 # Cross-component integration tests
+|   |-- README.md              # src/ layout guide
+|   `-- .env.example           # Environment variable reference
 |-- docs/                      # Problem, solution, architecture, setup, contracts
 |-- demo/                      # Demo URL, video URL, and screenshots
 |-- presentation/              # Final pitch deck
@@ -77,6 +81,16 @@ python -m uvicorn backend.app.main:app --reload --port 8000
 ```
 
 Verify: `http://localhost:8000/api/v1/health`
+
+Expected response:
+
+```json
+{
+  "status": "healthy",
+  "service": "portflow-api",
+  "version": "0.1.0"
+}
+```
 
 ### Frontend
 
