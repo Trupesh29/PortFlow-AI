@@ -4,7 +4,7 @@
 
 PortFlow AI is an AI-assisted decision-support system for container-terminal shift supervisors. It combines a 72-hour congestion forecast, vessel waiting-time prediction, joint berth-and-crane optimisation, and explainable recommendations in one operational workspace.
 
-## Team
+## Team. 
 
 | Field | Value |
 |---|---|
