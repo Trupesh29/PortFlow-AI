@@ -103,9 +103,13 @@ npm run dev
 
 ## Test Results — last verified (Phase 2)
 
-- **Backend Pytest**: `test_health_check_returns_200 PASSED [100%]` (1 passed in ~0.8 s).
-- **Frontend Build**: `tsc && vite build` succeeded; bundle in `src/frontend/dist/`.
-- **Secret Scanning**: No API keys or plain secrets committed; `.env.example` templates present.
+- **Backend Pytest**: `test_health_check_returns_200 PASSED [100%]` (1 passed in 0.96 s).
+- **Backend Health Check**: Live `GET http://127.0.0.1:8000/api/v1/health` verified returning exact payload `{"status":"healthy","service":"portflow-api","version":"0.1.0"}`.
+- **Backend Dependency Check**: `pip check` verified: `No broken requirements found.`
+- **Frontend Build**: `tsc && vite build` succeeded in 1.20 s; bundle in `src/frontend/dist/`.
+- **Frontend Audit**: `npm audit` verified: `found 0 vulnerabilities`.
+- **Secret Scanning**: No API keys or plain secrets committed; only `.env.example` templates present.
+- **Submission Validator**: All required files, fields, and `src/` source code checks pass; `demo-video-link.txt` retained as pending manual upload.
 
 ---
 
@@ -128,9 +132,64 @@ None. `GET /api/v1/health` still matches `docs/API_CONTRACT.md`.
 
 ---
 
+## Phase 5 — Database foundation and synthetic data (13 September 2026)
+
+### Completed work
+
+- Implemented SQLAlchemy 2 typed models for `ports`, `vessels`, `berths`,
+  `cranes`, `vessel_schedules`, and `historical_operations`.
+- Added UUID keys, timezone-aware timestamps, foreign keys, bidirectional
+  relationships, uniqueness rules, indexes, and database check constraints.
+- Added centralized `pool_pre_ping` session management and FastAPI-compatible
+  `get_db` dependency.
+- Added Alembic configuration and revision `0001_mvp_operational_tables`.
+- Added deterministic fictional generator: 1 terminal, 3 berths, 7 cranes,
+  15 vessels, 36 schedules, and 36 historical operations for each of five
+  scenarios: baseline, arrival_surge, crane_outage, berth_closure, and
+  handling_slowdown.
+- Added an idempotent seed command with development/test reset protection.
+- Added database metadata, relationship, constraint, generator, compatibility,
+  and congestion-pressure tests.
+
+### Changed files
+
+`src/database/base.py`, `src/database/session.py`, `src/database/models/`,
+`src/database/alembic.ini`, `src/database/migrations/`,
+`src/data/generate_synthetic.py`, `src/data/seed_database.py`,
+`src/data/README.md`, `src/backend/tests/database/`, `src/README.md`, and
+`docs/setup-guide.md`.
+
+### Verification
+
+- `python -m pytest backend/tests/database -q -m "not integration"`: **7 passed**.
+- `python -m pytest backend/tests -q -m "not integration"`: **8 passed**.
+- Generator tests: **3 passed**; same seed is reproducible and compatibility
+  and congested-scenario assertions pass.
+- `compileall` and `git diff --check`: passed.
+- PostgreSQL migration smoke test: **skipped**, because no PostgreSQL server is
+  available in this environment; SQLite was not used as a substitute.
+- Scenario JSON emission: not completed in this sandbox because the existing
+  `src/data/scenarios` directory denied file creation; the generator remains
+  reproducible and can emit to a writable directory in development.
+- Frontend was not rebuilt because no frontend files or shared frontend config
+  changed. The official `.github/workflows/validate.yml` was not modified.
+
+### Contract and readiness changes
+
+No API contract changes. Database foundation is now **in progress/implemented
+for the MVP tables**. ML, optimisation, demo, screenshots, presentation,
+deployment, and final submission remain incomplete.
+
+### Known issues and recommended next task
+
+The migration should be applied against a non-production PostgreSQL database
+with `alembic -c database/alembic.ini upgrade head` and then checked with the
+integration test. The next task should implement the first real read-only
+service/API slice on top of these tables, with PostgreSQL-backed tests.
+
 ## Recommended Next Task
 
-**Task:** Database layer and synthetic data generation.
+**Task:** Database layer and synthetic data generation (Plan 3).
 
 **Scope:**
 1. Implement SQLAlchemy 2 declarative models for Vessels, Ports, Berths, Cranes, Schedules.

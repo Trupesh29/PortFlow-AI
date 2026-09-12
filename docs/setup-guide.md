@@ -8,7 +8,7 @@ This guide starts the current PortFlow AI application skeleton on Windows PowerS
 - Python 3.12
 - Node.js 18 or newer; Node.js 20 is recommended
 - npm
-- PostgreSQL 15 or newer for database phases; it is not required for the current health check
+- PostgreSQL 15 or newer; create a development database named `portflow` and a user with access
 - IBM Bob IDE with the hackathon-provisioned account for Bob-assisted tasks and report export
 
 ## 1. Clone
@@ -81,7 +81,22 @@ Frontend variables are documented in `src/frontend/.env.example`:
 
 Never commit `backend/.env`, `frontend/.env`, IBM Cloud credentials, or API keys.
 
-## 5. Tests and Build
+## 5. Database and synthetic data
+
+After PostgreSQL is running and `DATABASE_URL` is set in `src/backend/.env`:
+
+```powershell
+cd src
+alembic -c database/alembic.ini upgrade head
+python -m data.seed_database
+python -m data.generate_synthetic
+```
+
+The seed is deterministic, idempotent, and fictional. `--reset` is guarded to
+development/test/local environments. Scenarios are `baseline`, `arrival_surge`,
+`crane_outage`, `berth_closure`, and `handling_slowdown`.
+
+## 6. Tests and Build
 
 Backend:
 
@@ -95,6 +110,12 @@ This runs the health-check unit test. Expected output:
 ```
 .
 1 passed in ...s
+```
+
+Database tests:
+
+```powershell
+python -m pytest backend\tests\database -q
 ```
 
 Frontend:
@@ -119,4 +140,4 @@ The action stays red until `demo/demo-video-link.txt` contains the real public v
 | Browser reports a CORS error | Frontend URL is not allowed | Match `CORS_ORIGINS` to the actual Vite origin |
 | Port 8000 or 5173 is busy | Another development server is running | Stop that server or choose another port and update the frontend API URL |
 | GitHub validation fails on video | Placeholder is still present | Add a viewable YouTube, Loom, Box, or Google Drive link |
-| Database connection fails | PostgreSQL is not running or URL is wrong | Start PostgreSQL and check `DATABASE_URL`; the current health endpoint itself does not require PostgreSQL |
+| Database connection fails | PostgreSQL is not running, database/user is missing, or URL is wrong | Start PostgreSQL, create the `portflow` database/user, verify `DATABASE_URL`, and rerun Alembic |

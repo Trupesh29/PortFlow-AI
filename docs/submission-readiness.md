@@ -16,8 +16,8 @@
 | Problem selection | Complete | L1 Port Congestion Predictor and Operations Optimiser |
 | Official local structure | Complete | All app code under `src/`; `src/README.md` and `src/.env.example` present |
 | Application skeleton | Complete | FastAPI health endpoint and React shell verified |
-| Database foundation | Not started | Implement models, Alembic, and tests in `src/database/` |
-| Synthetic dataset | Not started | Add seeded generator in `src/data/` |
+| Database foundation | Implemented for MVP tables | Apply `alembic -c database/alembic.ini upgrade head` on a non-production PostgreSQL database |
+| Synthetic dataset | Implemented and tested | Use `python -m data.generate_synthetic`; all output is fictional and seed-driven |
 | ML prediction | Not started | Train, evaluate, persist, and test real models in `src/ml/` |
 | Optimiser | Not started | Add runtime CP-SAT assignments in `src/optimizer/` |
 | IBM Bob MCP tools | Not started | Add safe read/explanation tools in `src/mcp-server/` after APIs exist |

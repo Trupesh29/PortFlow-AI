@@ -1,3 +1,11 @@
 ﻿# Database Migrations
 
-Alembic migration scripts will be located here once initialized in the database phase.
+Run from `src/` after creating a PostgreSQL database:
+
+```powershell
+alembic -c database/alembic.ini upgrade head
+alembic -c database/alembic.ini downgrade base
+```
+
+Revision `0001_mvp_operational_tables` owns only the six MVP tables. Application
+startup never calls `create_all`.
