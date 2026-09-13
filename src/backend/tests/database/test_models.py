@@ -32,7 +32,7 @@ def test_postgresql_migration_smoke():
     if os.getenv("APP_ENV", "development") == "production":
         pytest.skip("refusing to use a production environment for tests")
     try:
-        engine = create_engine(url, pool_pre_ping=True)
+        engine = create_engine(url, pool_pre_ping=True, connect_args={"connect_timeout": 2})
         with engine.connect(): pass
     except Exception as exc:
         pytest.skip(f"PostgreSQL unavailable at configured test URL: {exc.__class__.__name__}")

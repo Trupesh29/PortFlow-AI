@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql+psycopg://portflow:portflow@localhost:5432/portflow"
     CORS_ORIGINS: Union[List[str], str] = ["http://localhost:5173"]
     LOG_LEVEL: str = "INFO"
+    SYNTHETIC_DATA_SEED: int = 2026
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod

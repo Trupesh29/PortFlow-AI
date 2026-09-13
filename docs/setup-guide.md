@@ -1,11 +1,11 @@
 # Setup Guide
 
-This guide starts the current PortFlow AI application skeleton on Windows PowerShell. The same Python and npm commands work on macOS/Linux after using the platform's virtual-environment activation command.
+This guide starts the PortFlow AI application on Windows PowerShell. The same Python and npm commands work on macOS/Linux after using the platform's virtual-environment activation command.
 
 ## Prerequisites
 
 - Git
-- Python 3.12
+- Python 3.12 (or compatible 3.12+)
 - Node.js 18 or newer; Node.js 20 is recommended
 - npm
 - PostgreSQL 15 or newer; create a development database named `portflow` and a user with access
@@ -34,15 +34,15 @@ Copy-Item backend\.env.example backend\.env
 python -m uvicorn backend.app.main:app --reload --port 8000
 ```
 
-Open `http://localhost:8000/api/v1/health`. The expected response is:
+Verify backend endpoints:
 
-```json
-{
-  "status": "healthy",
-  "service": "portflow-api",
-  "version": "0.1.0"
-}
-```
+- Health: `http://localhost:8000/api/v1/health`
+- Summary KPIs: `http://localhost:8000/api/v1/dashboard/summary?port_code=PFA`
+- Congestion Forecast (72h): `http://localhost:8000/api/v1/dashboard/congestion?port_code=PFA`
+- Schedules: `http://localhost:8000/api/v1/schedules?port_code=PFA`
+- Berths: `http://localhost:8000/api/v1/resources/berths?port_code=PFA`
+- Cranes: `http://localhost:8000/api/v1/resources/cranes?port_code=PFA`
+- Scenarios: `http://localhost:8000/api/v1/scenarios`
 
 API documentation is available at `http://localhost:8000/docs`.
 
@@ -57,31 +57,35 @@ Copy-Item .env.example .env
 npm run dev
 ```
 
-Open `http://localhost:5173`.
+Open `http://localhost:5173` to access the live operations dashboard.
 
-## 4. Environment Variables
+## 4. Operational Baseline Calculation Method (`baseline_rule_v1`)
 
-Backend variables are documented in `src/backend/.env.example`:
+The dashboard features a deterministic heuristic baseline calculation engine (`baseline_rule_v1`):
 
-| Variable | Purpose | Development value |
-|---|---|---|
-| `APP_NAME` | API display name | `PortFlow AI API` |
-| `APP_ENV` | Runtime environment | `development` |
-| `API_V1_PREFIX` | API prefix | `/api/v1` |
-| `DATABASE_URL` | PostgreSQL connection URL | Local non-production URL |
-| `CORS_ORIGINS` | Allowed browser origins | `http://localhost:5173` |
-| `LOG_LEVEL` | Application log level | `INFO` |
+1. **Horizon Partitioning**: The requested horizon (default 72 hours) is divided into 12 six-hour windows $[t_{\text{start}}, t_{\text{end}})$.
+2. **Demand Input**: Scheduled vessel arrivals and container move demand within the window.
+3. **Resource Capacity**: Open berths and available quay cranes adjusted for the active scenario (e.g. Quay B3 closed in `berth_closure`, QC06/07 offline in `crane_outage`, 35% productivity drop in `handling_slowdown`).
+4. **Physical Compatibility**: Verification that vessel draft $\le$ berth max draft and vessel length $\le$ berth max length.
+5. **Pressure Formulation**:
+   $$R_{\text{berth}} = \frac{\text{arrivals}}{\max(1, \text{available\_berths})}$$
+   $$R_{\text{workload}} = \frac{\text{moves}}{\max(1, \text{crane\_moves\_throughput\_6h})}$$
+   $$\text{Score } S = 0.45 \cdot \min(2.5, R_{\text{berth}}) + 0.35 \cdot \min(2.5, R_{\text{workload}}) + \text{bottleneck\_penalty}$$
+   $$\text{Risk Probability} = \min(1.0, \max(0.0, \text{round}(S / 1.75, 2)))$$
+6. **Risk Categorization**:
+   - `LOW`: $< 0.40$
+   - `MEDIUM`: $0.40 - 0.70$
+   - `HIGH`: $0.70 - 0.90$
+   - `CRITICAL`: $\ge 0.90$
 
-Frontend variables are documented in `src/frontend/.env.example`:
+> [!NOTE]
+> `baseline_rule_v1` is an honest, deterministic heuristic rule baseline. It does not claim statistical accuracy or trained-model confidence. Machine learning models will be connected in Phase 7.
 
-| Variable | Purpose |
-|---|---|
-| `VITE_API_BASE_URL` | Base URL for API calls |
-| `VITE_DEFAULT_PORT_ID` | Optional default terminal identifier |
+## 5. Synthetic Data Disclosure
 
-Never commit `backend/.env`, `frontend/.env`, IBM Cloud credentials, or API keys.
+All vessel schedules, port geometries, and crane productivities are fictional and generated reproducibly with seed `2026`. No confidential, client, or live AIS port feeds are used. Responses explicitly return `is_synthetic: true`.
 
-## 5. Database and synthetic data
+## 6. Database and Synthetic Scenarios
 
 After PostgreSQL is running and `DATABASE_URL` is set in `src/backend/.env`:
 
@@ -92,46 +96,32 @@ python -m data.seed_database
 python -m data.generate_synthetic
 ```
 
-The seed is deterministic, idempotent, and fictional. `--reset` is guarded to
-development/test/local environments. Scenarios are `baseline`, `arrival_surge`,
-`crane_outage`, `berth_closure`, and `handling_slowdown`.
+The seed is deterministic, idempotent, and fictional. `--reset` is guarded to development/test/local environments. Supported scenarios: `baseline`, `arrival_surge`, `crane_outage`, `berth_closure`, and `handling_slowdown`.
 
-## 6. Tests and Build
+## 7. Tests and Verification
 
-Backend:
+Backend unit and API tests:
 
 ```powershell
 cd src
-python -m pytest backend\tests -q
+python -m pytest backend\tests -v -m "not integration"
 ```
 
-This runs the health-check unit test. Expected output:
-
-```
-.
-1 passed in ...s
-```
-
-Database tests:
+Frontend unit and component tests:
 
 ```powershell
-python -m pytest backend\tests\database -q
+cd src\frontend
+npm test
 ```
 
-Frontend:
+Frontend production build:
 
 ```powershell
 cd src\frontend
 npm run build
 ```
 
-## 6. Submission Validation
-
-Every push triggers `.github/workflows/validate.yml`. On GitHub, open **Actions**, select **Validate Submission**, and confirm the latest run is green.
-
-The action stays red until `demo/demo-video-link.txt` contains the real public video URL. Before submission, also verify at least three screenshots, the presentation, all Bob session reports, and the public repository visibility.
-
-## Troubleshooting
+## 8. Troubleshooting
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -139,5 +129,4 @@ The action stays red until `demo/demo-video-link.txt` contains the real public v
 | PowerShell blocks activation | Local execution policy | Run the interpreter directly as `.\.venv\Scripts\python.exe -m ...` |
 | Browser reports a CORS error | Frontend URL is not allowed | Match `CORS_ORIGINS` to the actual Vite origin |
 | Port 8000 or 5173 is busy | Another development server is running | Stop that server or choose another port and update the frontend API URL |
-| GitHub validation fails on video | Placeholder is still present | Add a viewable YouTube, Loom, Box, or Google Drive link |
-| Database connection fails | PostgreSQL is not running, database/user is missing, or URL is wrong | Start PostgreSQL, create the `portflow` database/user, verify `DATABASE_URL`, and rerun Alembic |
+| Database connection fails | PostgreSQL is not running | Start PostgreSQL or verify `DATABASE_URL` |
