@@ -156,3 +156,35 @@ export async function fetchCranes(
 export async function fetchScenarios(): Promise<ScenariosResponse> {
   return request<ScenariosResponse>('/scenarios');
 }
+
+export async function postWaitingTimePrediction(
+  scheduleId: string
+): Promise<import('../types/api').WaitingTimePrediction> {
+  return request<import('../types/api').WaitingTimePrediction>(
+    '/predictions/waiting-time',
+    {
+      method: 'POST',
+      body: JSON.stringify({ schedule_id: scheduleId }),
+    }
+  );
+}
+
+export async function postCongestionPrediction(
+  portId: string,
+  windowStartUtc: string,
+  windowEndUtc: string,
+  slotDurationMinutes: number = 60
+): Promise<import('../types/api').CongestionMLPrediction> {
+  return request<import('../types/api').CongestionMLPrediction>(
+    '/predictions/congestion',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        port_id: portId,
+        window_start_utc: windowStartUtc,
+        window_end_utc: windowEndUtc,
+        slot_duration_minutes: slotDurationMinutes,
+      }),
+    }
+  );
+}

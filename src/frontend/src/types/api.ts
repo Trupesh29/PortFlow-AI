@@ -162,3 +162,44 @@ export interface ApiErrorPayload {
 export interface ApiErrorResponse {
   error: ApiErrorPayload;
 }
+
+// ── ML Prediction Types ─────────────────────────────────────────────────────
+
+export interface ExplanationFactor {
+  factor: string;
+  contribution: number;
+  description: string;
+}
+
+export interface WaitingTimePrediction {
+  schedule_id: string;
+  vessel_id: string;
+  port_id: string;
+  eta_utc: string;
+  predicted_waiting_time_hours: number;
+  prediction_lower_bound_hours: number;
+  prediction_upper_bound_hours: number;
+  confidence: number;
+  model_version: string;
+  data_source: string;
+  generated_at_utc: string;
+  explanation_factors: ExplanationFactor[];
+}
+
+export interface CongestionSlot {
+  slot_start_utc: string;
+  slot_end_utc: string;
+  congestion_probability: number;
+  congestion_level: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  predicted_berth_occupancy_pct: number;
+  vessel_count_expected: number;
+  contributing_vessel_ids: string[];
+}
+
+export interface CongestionMLPrediction {
+  port_id: string;
+  generated_at_utc: string;
+  model_version: string;
+  data_source: string;
+  slots: CongestionSlot[];
+}

@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -50,6 +50,8 @@ yarn-error.log*
 src/ml/artifacts/*.joblib
 src/ml/artifacts/*.pkl
 src/ml/artifacts/*.onnx
+!src/ml/artifacts/waiting_time_v1.joblib
+!src/ml/artifacts/congestion_v1.joblib
 src/data/raw/*
 !src/data/raw/.gitkeep
 src/data/processed/*

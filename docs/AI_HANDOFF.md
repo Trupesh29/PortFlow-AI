@@ -7,15 +7,17 @@
 
 ## Current Status
 
-Phase 6 — Seeded Port Data → FastAPI Summary → Congestion Baseline (`baseline_rule_v1`) → React Dashboard slice complete (13 September 2026).
+Phase 7 — ML Training Pipeline & Prediction Endpoints complete (13 September 2026).
 
 All application source code remains under `src/`.
-- 17 backend unit and API tests pass (`17 passed, 1 deselected in 3.29s`).
-- 5 frontend component and integration tests pass (`5 passed in 2.88s`).
-- Frontend production bundle builds cleanly with zero TypeScript errors (`dist/assets/index-*.js`, 2.03s).
-- Live FastAPI server verified returning 200 OK on `/api/v1/health`, `/api/v1/dashboard/summary`, and `/api/v1/dashboard/congestion`.
-- React operations dashboard renders real seeded and synthetic scenario records with 72-hour 6-hour bucket congestion timeline, real KPIs, vessel queue with physical berth compatibility, and berth/crane resource status panels.
-- All predictions are explicitly labeled `baseline_rule_v1`, synthetic data is disclosed as `is_synthetic: true`, and no fake ML or optimizer claims appear.
+- 24 backend unit and API tests pass (`24 passed, 1 deselected in 5.76s`).
+- 5 frontend component and integration tests pass.
+- Frontend production bundle builds cleanly with zero TypeScript errors (`dist/assets/index-*.js`, 20.74s).
+- Two trained scikit-learn models committed: `waiting_time_v1.joblib` (285 KB) and `congestion_v1.joblib` (246 KB).
+- `POST /api/v1/predictions/waiting-time` and `POST /api/v1/predictions/congestion` live.
+- React Predictions page renders schedule selector, waiting-time inference result with explanation factors, and per-slot congestion probability bars.
+- Model performance: MAE 23.5 min (waiting-time regressor), ROC-AUC 0.79 (congestion classifier).
+- All predictions labeled `data_source: synthetic`, model unavailability surfaces as HTTP 503.
 
 Submission deadline: **15 September 2026, 12:00 PM – 11:45 PM.**
 
@@ -140,24 +142,45 @@ npm run dev
 - **Live HTTP Endpoints**: Verified live 200 OK responses across `/health`, `/dashboard/summary`, and `/dashboard/congestion`.
 - **Code Cleanliness**: `git diff --check` clean, zero credentials or `.env` files committed.
 
+### Phase 7 — ML Training Pipeline & Prediction Endpoints (13 September 2026)
+- **Feature Engineering** (`src/ml/features.py`): 16-feature vector from vessel physical attributes, schedule context, concurrent arrival pressure, berth/crane availability, and compatibility ratios.
+- **Training Script** (`src/ml/train.py`): Reproducible offline pipeline; 180 rows across 5 scenarios; `GradientBoostingRegressor` (waiting-time) and `GradientBoostingClassifier` (congestion).
+- **ModelRegistry** (`src/ml/inference.py`): Lazy singleton; raises `ModelUnavailableError` (→ HTTP 503) if artifacts missing.
+- **Model Artifacts**: `waiting_time_v1.joblib` (285 KB, MAE 23.5 min), `congestion_v1.joblib` (246 KB, ROC-AUC 0.79) committed to `src/ml/artifacts/`.
+- **Prediction Schemas** (`src/backend/app/schemas/predictions.py`): Pydantic contracts per API_CONTRACT.md §7–§8.
+- **ML Service Layer** (`src/backend/app/services/ml_service.py`): DB-first with synthetic fallback; rule-based explanation factors.
+- **Prediction Routes** (`src/backend/app/api/routes/predictions.py`): `POST /predictions/waiting-time` and `POST /predictions/congestion`.
+- **Tests** (`src/backend/tests/test_predictions_api.py`): 7 test cases; 24 total backend tests pass.
+- **React Predictions Page** (`src/frontend/src/pages/PredictionsPage.tsx`): Schedule selector, waiting-time inference panel with explanation factors and confidence interval, congestion slot probability bars.
+
+---
+
+## Test Results — Phase 7
+
+- **Backend Pytest**: `24 passed, 1 deselected, 3 warnings in 5.76s` (all model, constraint, synthetic data, health, dashboard, and prediction tests).
+- **Frontend Vitest**: `5 passed` (existing tests unbroken).
+- **Frontend Production Build**: `tsc && vite build` succeeded in 20.74s with 0 TypeScript errors.
+
 ---
 
 ## Known Gaps & Next Steps
 
-- **Trained Machine Learning Models**: Real waiting-time and congestion ML models in `src/ml/` (to replace/augment `baseline_rule_v1`).
-- **OR-Tools Solver**: Joint berth-and-crane CP-SAT optimizer in `src/optimizer/`.
+- **OR-Tools Optimizer**: Joint berth-and-crane CP-SAT optimizer in `src/optimizer/`.
 - **Alternate Port Routing**: Cost comparison and routing recommendations.
 - **AI Copilot**: IBM Bob MCP tools in `src/mcp-server/`.
-- **Submission Evidence**: Record demo video, take 3+ screenshots, build presentation deck in `presentation/`, export IBM Bob session markdown and usage screenshots to `bob_sessions/`.
+- **Submission Evidence**: Record demo video, capture 3+ screenshots, build presentation deck in `presentation/`, export IBM Bob session markdown and usage screenshots to `bob_sessions/`.
+- **GitHub Actions**: Confirm green validation badge once demo video URL is added.
 
 ---
 
 ## Recommended Next Task
 
-**Task:** ML training pipeline and waiting-time inference service (Plan 5).
+**Task:** OR-Tools CP-SAT Berth & Crane Optimiser (Phase 8) — OR — Submission polish.
 
 **Scope:**
-1. Train XGBoost/scikit-learn regression model on synthetic historical operations.
-2. Persist model artifacts in `src/ml/models/`.
-3. Implement `src/backend/app/services/ml.py` for vessel waiting-time prediction.
-4. Add `POST /api/v1/predictions/waiting-time` and `POST /api/v1/predictions/congestion`.
+1. Implement `src/optimizer/` with CP-SAT joint berth-and-crane assignment.
+2. Add `POST /api/v1/optimise/assignments` endpoint per API_CONTRACT.md §9.
+3. Add React Optimizer page showing optimal assignment table.
+4. — OR — Skip optimizer and focus on: demo video recording, 3 screenshots, presentation deck, submission form.
+
+**Deadline priority:** Submission form opens 15 September 12:00 PM. Polish and evidence gathering should start latest 14 September morning.

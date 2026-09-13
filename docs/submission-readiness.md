@@ -19,7 +19,7 @@
 | Database foundation | Implemented for MVP tables | Apply `alembic -c database/alembic.ini upgrade head` on a non-production PostgreSQL database |
 | Synthetic dataset | Implemented and tested | Use `python -m data.generate_synthetic`; all output is fictional and seed-driven |
 | Dashboard slice & Baseline congestion | Complete | Working end-to-end FastAPI summary/congestion (`baseline_rule_v1`) + React dashboard with 5 scenarios |
-| ML prediction | Not started | Train, evaluate, persist, and test real models in `src/ml/` |
+| ML prediction | Complete | `GradientBoostingRegressor` (MAE 23.5 min) + `GradientBoostingClassifier` (ROC-AUC 0.79) in `src/ml/`; `POST /predictions/waiting-time` and `POST /predictions/congestion` live; React Predictions page |
 | Optimiser | Not started | Add runtime CP-SAT assignments in `src/optimizer/` |
 | IBM Bob MCP tools | Not started | Add safe read/explanation tools in `src/mcp-server/` after APIs exist |
 | Demo deployment | Not started | Add URL or record local demo |
