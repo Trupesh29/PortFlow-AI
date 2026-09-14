@@ -1,17 +1,15 @@
 import React from 'react';
-import { EmptyState } from '../components/common/EmptyState';
+import { BerthLayoutMap } from '../components/BerthLayoutMap';
 
 export const MapPage: React.FC = () => {
   return (
-    <div className="space-y-6">
-      <div className="border-b border-slate-800 pb-4">
-        <h1 className="text-xl font-bold text-slate-100">Port Geospatial Map</h1>
-        <p className="text-xs text-slate-400 mt-0.5">Terminal layout, berth locations, and anchorage positions</p>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      <div className="border-b border-slate-200 pb-4">
+        <h1 className="text-xl font-bold text-slate-900">Port Geospatial Map</h1>
+        <p className="text-sm text-slate-500 mt-1">Terminal layout, berth capacity status, and anchorage constraints</p>
       </div>
-      <EmptyState
-        title="Geospatial Map Standby"
-        description="OpenStreetMap and Leaflet integration will display port coordinates, berth faces, and anchored vessel positions once terminal data is configured."
-      />
+      
+      <BerthLayoutMap />
     </div>
   );
 };

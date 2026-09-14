@@ -26,13 +26,17 @@ const navItems: NavItemConfig[] = [
   { name: 'AI Copilot (Bob)', path: '/copilot', icon: Bot },
 ];
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  onNavClick?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ onNavClick }) => {
   return (
-    <aside className="w-60 border-r border-slate-800 bg-navy-950 flex flex-col shrink-0 min-h-[calc(100vh-3.5rem)]">
-      <div className="p-3 text-[11px] font-semibold tracking-wider text-slate-400 uppercase">
+    <aside className="w-full h-full flex flex-col shrink-0">
+      <div className="p-4 text-[11px] font-bold tracking-wider text-slate-500 uppercase">
         Operational Modules
       </div>
-      <nav className="flex-1 px-2 space-y-1">
+      <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
@@ -40,11 +44,12 @@ export const Sidebar: React.FC = () => {
               key={item.path}
               to={item.path}
               end={item.path === '/'}
+              onClick={onNavClick}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-teal-500/10 text-teal-300 border border-teal-500/20 shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                    ? 'bg-port-lavender text-port-lavenderDark font-semibold shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`
               }
             >
@@ -54,9 +59,9 @@ export const Sidebar: React.FC = () => {
           );
         })}
       </nav>
-      <div className="p-3 border-t border-slate-800 text-[11px] text-slate-400">
-        <span className="font-semibold text-slate-300 block">PortFlow AI — Monolith</span>
-        <span>Version 0.1.0 (Skeleton)</span>
+      <div className="p-4 border-t border-slate-200 text-xs text-slate-500 bg-slate-50">
+        <span className="font-semibold text-slate-700 block mb-0.5">PortFlow AI</span>
+        <span>Version 0.1.0 (Demo)</span>
       </div>
     </aside>
   );
