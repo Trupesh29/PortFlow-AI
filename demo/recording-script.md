@@ -5,7 +5,7 @@ Friend presents the PPT; you operate and narrate the live app. Read the quoted p
 
 ## 0:00–0:15 — Friend — Slide 1: introduction
 
-> Hello everyone. We are Team PortFlow AI. Our project helps container-terminal shift supervisors identify congestion pressure early and estimate vessel waiting times before making operational decisions.
+> Hello everyone. We are The Watson Four, and our project is PortFlow AI. It helps container-terminal shift supervisors identify congestion pressure early and estimate vessel waiting times before making operational decisions.
 
 ## 0:15–0:35 — Friend — Slide 2: problem
 

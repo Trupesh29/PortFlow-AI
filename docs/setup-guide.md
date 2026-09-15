@@ -13,7 +13,7 @@ This guide starts the PortFlow AI application on Windows PowerShell. The same Py
 
 ## 1. Clone
 
-The final public repository must be created with **Use this template** from the official Bobathon template and named `bob-ai-hackathon-portflow-ai`.
+The final public repository must be created with **Use this template** from the official Bobathon template and named `bob-ai-hackathon-the-watson-four` for team The Watson Four. The project name remains PortFlow AI.
 
 ```powershell
 git clone https://github.com/Trupesh29/PortFlow-AI.git

@@ -1,11 +1,11 @@
 # IBM Bobathon submission metadata. Keep this file at the repository root.
 
 team:
-  name: "PortFlow AI"
+  name: "The Watson Four"
   track: "AI"
   lead:
     name: "Deep Makwana"
-    email: "" # Required: awaiting Deep's confirmed submission email.
+    email: "24dcs048@charusat.edu.in"
   members:
     - name: "Manav Kansagara"
       email: "" # Awaiting confirmation.

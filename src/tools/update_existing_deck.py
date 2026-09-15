@@ -46,7 +46,7 @@ def overlay(n, x, y, w, h, value, size=26, color=N, background=W, bold=False, ce
 
 # Preserve the supplied artwork and correct only content that disagrees with the app.
 overlay(1,55,370,720,135,'Congestion forecasting and scenario\nsimulation for informed port planning.\nSynthetic-data prototype.',31)
-overlay(1,55,632,850,103,'IBM Bobathon 2026  |  Team: PortFlow AI\nLead: Deep Makwana\nMembers: Manav Kansagara, Smit Kansagara, Trupesh Hingrajiya',17,bold=True)
+overlay(1,55,632,850,103,'IBM Bobathon 2026  |  Team: The Watson Four\nLead: Deep Makwana\nMembers: Manav Kansagara, Smit Kansagara, Trupesh Hingrajiya',17,bold=True)
 overlay(3,877,336,430,45,'Scenario congestion indicators',26,color='22A6B4',bold=True)
 overlay(4,55,718,1240,30,'Illustrative workflow mockup — see the live demo for actual application output.',19,color='526477')
 overlay(4,55,260,295,108,'• Combines synthetic\n  schedules with ML.',25)
@@ -96,8 +96,8 @@ overlay(11,137,562,525,45,'IBM Bob development use; evidence pending',21)
 overlay(11,770,297,524,40,'Local demo: localhost:5173 (not deployed)',22,link='http://localhost:5173')
 overlay(11,770,385,524,40,'Video: recording and upload pending',23)
 overlay(11,770,472,524,40,'Repo: github.com/Trupesh29/PortFlow-AI',22,link='https://github.com/Trupesh29/PortFlow-AI')
-overlay(11,770,560,524,42,'Team: PortFlow AI | Lead: Deep Makwana',22)
-overlay(11,72,636,1230,31,'Pending: lead email, real video URL, Bob evidence, and repository naming/template confirmation.',18,center=True)
+overlay(11,770,560,524,42,'Team: The Watson Four | Lead: Deep Makwana',20)
+overlay(11,72,636,1230,31,'Pending: real video URL, Bob evidence, and repository naming/template confirmation.',18,center=True)
 
 notes = {
 1:'Friend: introduce PortFlow AI and the confirmed team. Synthetic-data forecasting prototype.',

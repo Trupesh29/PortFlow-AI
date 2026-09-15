@@ -8,9 +8,10 @@ PortFlow AI is a decision-support prototype for container-terminal shift supervi
 
 | Field | Value |
 |---|---|
-| Team name | PortFlow AI |
+| Team name | The Watson Four |
 | Track | AI |
 | Team lead | Deep Makwana |
+| Lead email | 24dcs048@charusat.edu.in |
 | Members | Manav Kansagara, Smit Kansagara, Trupesh Hingrajiya |
 | Project | L1 - Container Congestion Predictor & Port Operations Optimiser |
 

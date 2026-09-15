@@ -9,22 +9,22 @@ Checked against F:/Project/Bobathon_Submission_Template_Guide.pdf. The document 
 | src/README and dotenv example | Present | src/.env.example is a usable dotenv template; descriptions in docs/environment-variables.md |
 | Four required docs | Present and aligned | Problem, solution, architecture diagram/table, setup instructions |
 | Accurate implemented features | Aligned | Runtime forecasts separated from static planning/Copilot demos |
-| Team metadata | Incomplete | Deep Makwana is lead; Manav Kansagara, Smit Kansagara, Trupesh Hingrajiya are members; Deep's email required |
+| Team metadata | Lead complete; member emails pending | The Watson Four; lead Deep Makwana, 24dcs048@charusat.edu.in; Manav Kansagara, Smit Kansagara, Trupesh Hingrajiya are members |
 | At least three running-app screenshots | Present | 01-home-dashboard.png, 02-arrival-surge.png, 03-ml-prediction-output.png |
 | Named presentation deck | Present | presentation/slides.pptx; supplied 11-slide design retained, corrected text, matching narration |
 | 3–5 minute running-app video | Pending | Record using demo/recording-script.md, upload, replace placeholder URL |
 | Live-demo URL or NOT DEPLOYED | Present | demo/live-demo-url.txt contains NOT DEPLOYED; deployment is optional |
 | Public repository, not a fork | Verified on GitHub | https://github.com/Trupesh29/PortFlow-AI is public and not a fork |
-| Template creation and repository naming | Needs action/confirmation | Current name differs from bob-ai-hackathon-[team-name]; not-a-fork does not prove template creation |
+| Template creation and repository naming | Needs action/confirmation | Expected name: bob-ai-hackathon-the-watson-four; current name differs; not-a-fork does not prove template creation |
 | No committed env/dependency/build folders | Checked | Tracked path scan found no real .env, node_modules, .venv, dist, or __pycache__ paths |
-| Green official validation | Pending | Latest inspected run failed; video placeholder remains, and newly corrected lead email is blank |
+| Green official validation | Pending | Latest inspected run failed; video placeholder remains; required lead email is now filled |
 | Genuine IBM Bob integration/evidence | Pending | Team reports Bob use; exact tasks and real exports/usage screenshots needed; MCP not implemented |
 | Setup tested by teammate on clean terminal | Pending teammate verification | Build/tests and running local model journey verified; no fresh-machine claim |
 | Entry form and deadline | User action | Submit correct public repo URL before organiser's deadline |
 
 ## Finish in this order
 
-1. Confirm Deep's email and other registration details in submission.yaml.
+1. Confirm remaining member emails and registration details in submission.yaml. Deep's confirmed lead email is filled.
 2. Provide actual IBM Bob tasks and genuine exports/usage screenshots; update slide 6 and its narration to those facts.
 3. Review the edited copy of your supplied deck at presentation/slides.pptx. Original F:/Project/PortFlow_AI_Predictive_Port_Operations.pptx is untouched; placeholder names/links and unsupported claims are corrected in the repository copy.
 4. Record a 3–5 minute combined PPT and live-demo video; show startup and actual prediction output. Upload with public/view-only access and put the real link first in demo/demo-video-link.txt.
