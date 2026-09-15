@@ -1,3 +1,5 @@
+> Implementation scope (15 September 2026): this document includes target design/contracts. Runtime baseline dashboard, scenario/resource/schedule APIs, and ML prediction endpoints are implemented. Solver, alternate routing, persisted planning, and Bob MCP are not implemented; their UI pages are static demos. See architecture.md and submission-readiness.md for verified current behavior.
+
 ﻿# PortFlow AI — Project Context
 
 > **Version:** 1.0

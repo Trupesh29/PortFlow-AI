@@ -77,7 +77,7 @@ export const CongestionChart: React.FC<CongestionChartProps> = ({ forecast }) =>
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-1">
-            Calculated via deterministic heuristic rule: <code className="text-purple-300 font-mono">baseline_rule_v1</code> (ML model integration pending)
+            Calculated via deterministic heuristic rule: <code className="text-purple-300 font-mono">baseline_rule_v1</code> (trained ML available on Congestion &amp; Wait)
           </p>
         </div>
 

@@ -6,19 +6,25 @@ This guide starts the PortFlow AI application on Windows PowerShell. The same Py
 
 - Git
 - Python 3.12 (or compatible 3.12+)
-- Node.js 18 or newer; Node.js 20 is recommended
+- Node.js matching the installed Vite engine requirement (Node.js 22.12+ recommended; verify `node --version`)
 - npm
-- PostgreSQL 15 or newer; create a development database named `portflow` and a user with access
-- IBM Bob IDE with the hackathon-provisioned account for Bob-assisted tasks and report export
+- PostgreSQL 15+ is optional for this demo; the API uses synthetic data when unavailable
+- IBM Bob IDE is needed for genuine Bob work and judging evidence; it is not required to run the current application
 
 ## 1. Clone
 
 The final public repository must be created with **Use this template** from the official Bobathon template and named `bob-ai-hackathon-portflow-ai`.
 
 ```powershell
-git clone https://github.com/Trupesh29/bob-ai-hackathon-portflow-ai.git
-cd bob-ai-hackathon-portflow-ai
+git clone https://github.com/Trupesh29/PortFlow-AI.git
+cd PortFlow-AI
 ```
+
+The current repository URL above is verified. Before final submission, confirm the guide's required repository naming and template creation.
+
+## Environment reference
+
+See [environment-variables.md](environment-variables.md) for every implemented variable and its purpose. `--env-file backend/.env` below ensures the copied backend file is actually loaded.
 
 ## 2. Backend
 
@@ -31,7 +37,8 @@ python -m venv .venv
 python -m pip install --upgrade pip
 python -m pip install -r backend\requirements.txt
 Copy-Item backend\.env.example backend\.env
-python -m uvicorn backend.app.main:app --reload --port 8000
+python -m ml.train
+python -m uvicorn backend.app.main:app --env-file backend/.env --reload --port 8000
 ```
 
 Verify backend endpoints:
@@ -79,7 +86,7 @@ The dashboard features a deterministic heuristic baseline calculation engine (`b
    - `CRITICAL`: $\ge 0.90$
 
 > [!NOTE]
-> `baseline_rule_v1` is an honest, deterministic heuristic rule baseline. It does not claim statistical accuracy or trained-model confidence. Machine learning models will be connected in Phase 7.
+> `baseline_rule_v1` is a deterministic heuristic baseline, not a trained-model probability. Trained models are connected separately on the Congestion & Wait page. Retrain with `python -m ml.train` after installing dependencies so serialized models match your scikit-learn version.
 
 ## 5. Synthetic Data Disclosure
 

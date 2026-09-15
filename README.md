@@ -2,7 +2,7 @@
 
 > Predict congestion early. Re-plan port operations before queues form.
 
-PortFlow AI is an AI-assisted decision-support system for container-terminal shift supervisors. It combines a 72-hour congestion forecast, vessel waiting-time prediction, joint berth-and-crane optimisation, and explainable recommendations in one operational workspace.
+PortFlow AI is a decision-support prototype for container-terminal shift supervisors. It provides a 72-hour baseline congestion forecast, trained ML congestion and waiting-time predictions, and five scenario simulations. Optimizer, plan approval, and Copilot pages demonstrate the proposed workflow with static data.
 
 ## Team. 
 
@@ -10,7 +10,8 @@ PortFlow AI is an AI-assisted decision-support system for container-terminal shi
 |---|---|
 | Team name | PortFlow AI |
 | Track | AI |
-| Team lead | Trupesh |
+| Team lead | Deep Makwana |
+| Members | Manav Kansagara, Smit Kansagara, Trupesh Hingrajiya |
 | Project | L1 - Container Congestion Predictor & Port Operations Optimiser |
 
 ## Problem Statement
@@ -19,15 +20,15 @@ Container-terminal supervisors often coordinate vessel arrivals, berth availabil
 
 ## Solution
 
-PortFlow AI turns vessel schedules and terminal-capacity data into an actionable 72-hour plan. The system is designed to predict congestion risk, estimate vessel waiting time, compute feasible berth-and-crane assignments, compare alternate-port options, and explain the recommended actions through an IBM Bob-accessible MCP interface.
+PortFlow AI uses schedules and capacity data to calculate congestion pressure and estimate waiting time. Supervisors can compare five synthetic scenarios and request trained predictions. Runtime optimisation, alternate routing, and Bob MCP integration are planned extensions.
 
 ## Key Features
 
-- Congestion-risk and vessel waiting-time prediction from reproducible operational data.
-- Joint berth-and-crane optimisation with hard physical and availability constraints.
-- Before/after operational metrics so a supervisor can verify the benefit of a plan.
-- Human confirmation for routing changes and final plan approval.
-- IBM Bob workflow evidence in `bob_sessions/` and an MCP integration surface for explainable operations.
+- Interactive 72-hour dashboard using `baseline_rule_v1`.
+- Five reproducible operational disruption scenarios.
+- Trained Gradient Boosting waiting-time and congestion predictions.
+- API-backed schedules, berth compatibility, and crane availability.
+- Static demo interfaces for berth layout and supervisor plan review.
 
 ## Current Build Status
 
@@ -54,8 +55,8 @@ The repository contains the contract-first architecture, a working FastAPI backe
 |---|---|
 | Languages | Python 3.12, TypeScript |
 | Frameworks | FastAPI, React, Vite, Tailwind CSS |
-| AI and optimisation | scikit-learn or XGBoost, OR-Tools CP-SAT |
-| IBM technology | IBM Bob IDE, IBM Bob MCP integration |
+| AI | scikit-learn Gradient Boosting, joblib, NumPy |
+| Planned integrations | OR-Tools CP-SAT and IBM Bob MCP; not implemented |
 | Database | PostgreSQL with SQLAlchemy 2 |
 | Quality | Pytest, TypeScript compiler, GitHub Actions |
 
@@ -92,7 +93,8 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r backend\requirements.txt
 Copy-Item backend\.env.example backend\.env
-python -m uvicorn backend.app.main:app --reload --port 8000
+python -m ml.train
+python -m uvicorn backend.app.main:app --env-file backend/.env --reload --port 8000
 ```
 
 Verify: `http://localhost:8000/api/v1/health`
@@ -120,6 +122,8 @@ Open: `http://localhost:5173`
 
 For prerequisites, tests, environment variables, and troubleshooting, see [docs/setup-guide.md](docs/setup-guide.md).
 
+Submission audit: [docs/submission-readiness.md](docs/submission-readiness.md). Video script: [demo/recording-script.md](demo/recording-script.md). Deck: [presentation/slides.pptx](presentation/slides.pptx).
+
 ## Demo and Evidence
 
 - Demo video: [demo/demo-video-link.txt](demo/demo-video-link.txt)
@@ -138,7 +142,7 @@ For prerequisites, tests, environment variables, and troubleshooting, see [docs/
 
 ## What We Are Most Proud Of
 
-The design goes beyond showing a risk score: it connects prediction to a constraint-aware operational action, quantifies the expected improvement, and keeps the supervisor in control of consequential decisions.
+Our strongest implemented work is the reproducible scenario dashboard and trained prediction pipeline. Supervisors can inspect capacity pressure and request actual model outputs, with clear synthetic-data and implementation disclosures.
 
 ## Hackathon Submission Window
 

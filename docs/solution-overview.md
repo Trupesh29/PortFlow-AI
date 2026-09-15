@@ -1,53 +1,33 @@
 # Solution Overview
 
-## Concept
+## Core mechanism
 
-PortFlow AI is a decision-support workspace that turns terminal schedules and capacity constraints into an explainable, supervisor-approved operations plan.
+PortFlow AI combines schedule visibility, terminal capacity, deterministic scenario calculations, and trained machine-learning inference in one supervisor workspace.
 
-```text
-Vessel schedules + berth/crane capacity + historical operations
-                              |
-                              v
-                  Feature and validation layer
-                              |
-                 +------------+-------------+
-                 |                          |
-                 v                          v
-        Congestion/wait model       CP-SAT optimiser
-                 |                          |
-                 +------------+-------------+
-                              v
-              Ranked, explainable operations plan
-                              |
-                              v
-                   Supervisor review/approval
-```
+The dashboard aggregates the next 72 hours into six-hour windows. Arrival density, expected workload, berth compatibility, and crane capacity drive its transparent baseline calculation. Five seeded scenarios make disruptions reproducible.
 
-## Core Mechanism
+A separate prediction page calls trained Gradient Boosting models for vessel waiting time and hourly congestion probability. These are actual runtime model outputs, trained on 180 synthetic rows across five scenarios. They are not validated real-port forecasts.
 
-1. Validate vessel, schedule, berth, and crane data.
-2. Aggregate the next 72 hours into operational features such as arrival density, compatible-berth pressure, and expected crane demand.
-3. Predict congestion probability and vessel waiting time using a trained model rather than hard-coded demo values.
-4. Run a constraint-programming solver that respects vessel dimensions, berth availability, time overlap, and crane capacity.
-5. Compare the baseline and optimised plans using total waiting time, peak occupancy, and crane utilisation.
-6. Present causes and trade-offs in plain language, while requiring a supervisor to confirm routing changes and approve the final plan.
+## Design decisions
 
-## Differentiation
+- A modular FastAPI backend keeps services and validation together for a small prototype.
+- Seeded synthetic data allows a judge to reproduce the demo without private data or a live database.
+- The dashboard baseline is explicitly separate from ML inference, so users can identify the calculation method.
+- Model artifacts and metadata support reproducibility; retraining matches the installed scikit-learn version.
+- Resource and schedule views expose practical berth restrictions alongside forecasts.
 
-Many congestion dashboards stop at a red risk indicator. PortFlow AI connects three normally separate decisions: what is likely to happen, why it is likely, and what feasible schedule should be used instead. Every recommendation carries the inputs, model/solver version, and before/after metrics needed for an audit trail.
+## User journey
 
-## IBM Bob Role
+Open the dashboard, switch to Arrival Surge or Crane Outage, inspect the changed capacity-pressure view, then select a vessel on Congestion & Wait and request waiting-time and congestion predictions. This is the working end-to-end recording journey.
 
-IBM Bob is used as a core development partner for repository understanding, implementation, refactoring, test generation, documentation, and code review. Relevant task exports and usage-summary screenshots are stored in `bob_sessions/` for judging. The planned MCP server also exposes safe, read-oriented PortFlow tools so Bob can explain risk and plan outputs using live application context; approval actions remain in the web application.
+## Proposed planning workflow
 
-## User Experience
+Optimizer, operations-plan, map, and Copilot pages demonstrate the intended interface with static content. Runtime scheduling, alternate routing, persisted approvals, and live IBM Bob MCP explanations remain future work. The demonstration approval requires user confirmation but only changes local UI state.
 
-The supervisor begins on a compact operations dashboard, opens a high-risk congestion window, reviews the affected vessels and explanation, runs the optimiser, compares baseline and proposed assignments, and generates a 72-hour plan. The complete demo journey is designed to fit within three minutes.
+## IBM Bob status
 
-## Guardrails
+The team reports using IBM Bob, but exact tasks and genuine evidence are still awaiting confirmation. No Bob session exports or usage screenshots are present. Do not claim verified development contributions or a live MCP integration until evidence is added to bob_sessions/.
 
-- No hard-coded prediction or optimiser outputs.
-- No confidential, client, personal, or social-media data.
-- No automatic rerouting or plan approval.
-- Every synthetic scenario records its generation seed.
-- If a model or solver is unavailable, the API reports the limitation instead of returning invented results.
+## Impact and limits
+
+The intended benefit is earlier visibility of resource pressure and better informed supervisor decisions. No real operational savings have been measured. Production use would require real-port training data, calibration, solver implementation, access controls, and deployment testing.

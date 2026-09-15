@@ -7,6 +7,8 @@
 
 ## Current Status
 
+Submission preparation audit — 15 September 2026: required judging docs aligned with the current prototype; three sequential running-app screenshots added; edited 11-slide supplied deck at presentation/slides.pptx and timed two-person demo/recording-script.md created. Team lead updated to Deep Makwana with Manav Kansagara, Smit Kansagara, and Trupesh Hingrajiya as members. Deep's email remains required and unknown. The team reports Bob development use; genuine exports/usage evidence and exact tasks are pending. No live MCP or runtime solver exists. Original deck in F:/Project is untouched. Repository verified public/non-fork; guide-required naming/template provenance needs confirmation. Real video URL still missing. Frontend build and all 10 tests pass after disclosure updates. Submission updates prepared for a local commit at the user's request. See submission-readiness.md for the full requirement audit. No API contract changes or new application dependencies were introduced.
+
 Phase 7 — ML Training Pipeline & Prediction Endpoints complete (13 September 2026).
 
 All application source code remains under `src/`.

@@ -1,12 +1,7 @@
-# Demo Evidence
+# Demo evidence
 
-Before submission, add:
+Record the combined PPT and running-app walkthrough using recording-script.md (target 4:20). Show startup, scenario simulation, and actual trained-model outputs. Static optimizer/plan/Copilot pages are optional previews, not the core evidence.
 
-1. A public 3-5 minute demo video URL in `demo-video-link.txt`.
-2. The public deployed application URL in `live-demo-url.txt`, or keep `NOT DEPLOYED`.
-3. At least three screenshots in `screenshots/`:
-   - `01-dashboard.png`
-   - `02-congestion-explanation.png`
-   - `03-optimised-plan.png`
+Upload the recording to YouTube unlisted, Loom, Box, or view-only Google Drive. Replace the placeholder on the first line of demo-video-link.txt with the real accessible URL. Keep live-demo-url.txt as NOT DEPLOYED until deployed.
 
-The video should show the application starting, one complete supervisor journey, and actual model/solver output rather than static mockups.
+Three sequential app screenshots are in screenshots/. The deck is ../presentation/slides.pptx. See ../docs/submission-readiness.md for outstanding submission requirements.

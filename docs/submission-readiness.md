@@ -1,47 +1,36 @@
-# Bobathon Submission Readiness
+# Bobathon submission audit — 15 September 2026
 
-## Official Requirements Applied
+Checked against F:/Project/Bobathon_Submission_Template_Guide.pdf. The document defines the submission expectations; local changes were made at the user's request. No submission form was sent and no repository was renamed.
 
-- Public repository created using the official template, not a fork.
-- Repository name: `bob-ai-hackathon-portflow-ai`.
-- All project code under `src/`.
-- Required root `submission.yaml`, README, documentation, demo, presentation, and validator paths preserved.
-- Relevant IBM Bob IDE task reports and usage screenshots stored in `bob_sessions/`.
-- No credentials, client data, personal information, confidential data, or social-media data committed.
-
-## Current Status — 13 September 2026
-
-| Area | Status | Evidence or next action |
+| Guide requirement | Local status | Evidence / remaining action |
 |---|---|---|
-| Problem selection | Complete | L1 Port Congestion Predictor and Operations Optimiser |
-| Official local structure | Complete | All app code under `src/`; `src/README.md` and `src/.env.example` present |
-| Application skeleton | Complete | FastAPI health endpoint and React shell verified |
-| Database foundation | Implemented for MVP tables | Apply `alembic -c database/alembic.ini upgrade head` on a non-production PostgreSQL database |
-| Synthetic dataset | Implemented and tested | Use `python -m data.generate_synthetic`; all output is fictional and seed-driven |
-| Dashboard slice & Baseline congestion | Complete | Working end-to-end FastAPI summary/congestion (`baseline_rule_v1`) + React dashboard with 5 scenarios |
-| ML prediction | Complete | `GradientBoostingRegressor` (MAE 23.5 min) + `GradientBoostingClassifier` (ROC-AUC 0.79) in `src/ml/`; `POST /predictions/waiting-time` and `POST /predictions/congestion` live; React Predictions page |
-| Optimiser | Not started | Add runtime CP-SAT assignments in `src/optimizer/` |
-| IBM Bob MCP tools | Not started | Add safe read/explanation tools in `src/mcp-server/` after APIs exist |
-| Demo deployment | Not started | Add URL or record local demo |
-| Demo video | Blocked on working journey | Replace placeholder in `demo/demo-video-link.txt` |
-| Screenshots | Blocked on working UI | Add at least three final-state images to `demo/screenshots/` |
-| Presentation | Not started | Add `presentation/slides.pdf` or `.pptx` |
-| Bob session evidence | Requires IBM Bob IDE | Export real histories and usage screenshots to `bob_sessions/` |
-| GitHub template repository | Requires GitHub action | Create public repo with official template; name: `bob-ai-hackathon-portflow-ai` |
-| GitHub validation | Blocked by demo video link | Confirm green after video URL is added |
-| Submission form | Time-gated | Submit 15 September 2026, 12:00 PM–11:45 PM |
+| Required root structure | Present | README, submission.yaml, CONTRIBUTING, .gitignore, unchanged .github/workflows/validate.yml |
+| Source under src/ | Present | Backend, frontend, database, data, ML, tests, artifact tooling |
+| src/README and dotenv example | Present | src/.env.example is a usable dotenv template; descriptions in docs/environment-variables.md |
+| Four required docs | Present and aligned | Problem, solution, architecture diagram/table, setup instructions |
+| Accurate implemented features | Aligned | Runtime forecasts separated from static planning/Copilot demos |
+| Team metadata | Incomplete | Deep Makwana is lead; Manav Kansagara, Smit Kansagara, Trupesh Hingrajiya are members; Deep's email required |
+| At least three running-app screenshots | Present | 01-home-dashboard.png, 02-arrival-surge.png, 03-ml-prediction-output.png |
+| Named presentation deck | Present | presentation/slides.pptx; supplied 11-slide design retained, corrected text, matching narration |
+| 3–5 minute running-app video | Pending | Record using demo/recording-script.md, upload, replace placeholder URL |
+| Live-demo URL or NOT DEPLOYED | Present | demo/live-demo-url.txt contains NOT DEPLOYED; deployment is optional |
+| Public repository, not a fork | Verified on GitHub | https://github.com/Trupesh29/PortFlow-AI is public and not a fork |
+| Template creation and repository naming | Needs action/confirmation | Current name differs from bob-ai-hackathon-[team-name]; not-a-fork does not prove template creation |
+| No committed env/dependency/build folders | Checked | Tracked path scan found no real .env, node_modules, .venv, dist, or __pycache__ paths |
+| Green official validation | Pending | Latest inspected run failed; video placeholder remains, and newly corrected lead email is blank |
+| Genuine IBM Bob integration/evidence | Pending | Team reports Bob use; exact tasks and real exports/usage screenshots needed; MCP not implemented |
+| Setup tested by teammate on clean terminal | Pending teammate verification | Build/tests and running local model journey verified; no fresh-machine claim |
+| Entry form and deadline | User action | Submit correct public repo URL before organiser's deadline |
 
-## Deadline Priorities
+## Finish in this order
 
-1. Create the correctly named public repository from the official template and connect this workspace to it.
-2. Implement one polished end-to-end journey: scenario load -> prediction -> optimisation -> approved plan.
-3. Use IBM Bob IDE for meaningful implementation/review tasks and export the required evidence.
-4. Record the demo and capture screenshots only after the journey is stable.
-5. Add the deck, run the validator, test all public links in a signed-out browser, and submit early in the allowed window.
+1. Confirm Deep's email and other registration details in submission.yaml.
+2. Provide actual IBM Bob tasks and genuine exports/usage screenshots; update slide 6 and its narration to those facts.
+3. Review the edited copy of your supplied deck at presentation/slides.pptx. Original F:/Project/PortFlow_AI_Predictive_Port_Operations.pptx is untouched; placeholder names/links and unsupported claims are corrected in the repository copy.
+4. Record a 3–5 minute combined PPT and live-demo video; show startup and actual prediction output. Upload with public/view-only access and put the real link first in demo/demo-video-link.txt.
+5. Confirm required repo naming/template provenance, commit reviewed submission artifacts, push, and verify the unchanged validator is green.
+6. Have a teammate follow setup-guide.md in a fresh terminal and check public artifact links without signing in. Submit through the entry form yourself.
 
-## Manual Information to Confirm
+## Recording division (proposed, not a historical contribution claim)
 
-- Final team name and all member names/emails.
-- Whether `PortFlow AI` is the desired team name as well as the project name.
-- Organiser timezone for the submission window.
-- Final public repository, deployed application, demo video, and slide-deck links.
+Friend: problem, solution, architecture, verified IBM use, impact. You: startup, dashboard, scenario changes, runtime ML predictions, optional static plan review. See demo/recording-script.md for exact timings and words.

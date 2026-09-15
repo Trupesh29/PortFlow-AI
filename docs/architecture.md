@@ -1,54 +1,42 @@
 # Architecture
 
-## System Diagram
+## Current implementation
 
 ```mermaid
 flowchart LR
-    U[Port Shift Supervisor] --> UI[React Operations Workspace]
-    UI --> API[FastAPI Modular Monolith]
-    API --> DB[(PostgreSQL)]
-    API --> ML[Congestion and Wait-Time Models]
-    API --> OPT[OR-Tools CP-SAT Optimiser]
-    API --> PLAN[Operations Plan Service]
-    BOB[IBM Bob IDE] --> MCP[PortFlow MCP Server]
-    MCP --> API
-    DATA[Seeded Synthetic Data Generator] --> DB
-    ML --> API
-    OPT --> API
-    PLAN --> API
+    U[Shift supervisor] --> UI[React and TypeScript]
+    UI --> API[FastAPI /api/v1]
+    API --> BASE[baseline_rule_v1 congestion calculation]
+    API --> ML[Trained Gradient Boosting models]
+    API --> DATA[Seeded synthetic schedules and resources]
+    API --> DB[(Optional PostgreSQL)]
+    TRAIN[Offline training: five synthetic scenarios] --> MODEL[Joblib artifacts and metadata]
+    MODEL --> ML
+    UI --> DEMO[Static map, optimizer, plan, and Copilot interfaces]
 ```
 
-## Components
-
-| Component | Technology | Responsibility |
+| Component | Technology | Implemented responsibility |
 |---|---|---|
-| Operations workspace | React, TypeScript, Vite, Tailwind CSS | Dashboard, schedules, risk explanations, optimiser review, plan approval |
-| Application API | FastAPI, Pydantic | Validation, orchestration, stable `/api/v1` contract, error handling |
-| Persistence | PostgreSQL, SQLAlchemy 2, Alembic | Operational records, immutable prediction and optimisation snapshots |
-| Prediction | Python ML pipeline | Congestion probability and vessel waiting-time inference |
-| Optimisation | OR-Tools CP-SAT | Joint feasible berth-and-crane scheduling |
-| IBM Bob integration | Bob IDE task history and MCP server | Build evidence plus contextual, read-oriented operational explanations |
-| Quality pipeline | Pytest, TypeScript, GitHub Actions | Application tests and official submission validation |
+| Frontend | React, TypeScript, Vite, Tailwind | Dashboard, scenario selection, prediction requests, demo planning pages |
+| API | FastAPI, Pydantic | Input validation, dashboard/resources/scenarios endpoints, prediction inference |
+| Baseline engine | Python deterministic rules | Twelve six-hour windows with demand, capacity, and compatibility drivers |
+| ML pipeline | scikit-learn Gradient Boosting, joblib, NumPy | Offline training and runtime waiting-time/congestion inference |
+| Data | Seeded Python generator, SQLAlchemy, Alembic | Synthetic fallback, schema, and optional PostgreSQL seed/migrations |
+| Quality | Pytest, Vitest, TypeScript, GitHub Actions | App checks and unchanged official submission validator |
 
-## End-to-End Data Flow
+## Working end-to-end flow
 
-1. A schedule is entered manually or imported from a validated CSV file.
-2. The API normalises timestamps to UTC and persists the operational inputs.
-3. The prediction service produces a versioned probability, risk level, waiting-time estimate, and feature snapshot.
-4. The optimisation service receives the same schedule plus berth/crane constraints and returns the best feasible plan within a bounded solve time.
-5. The API persists the optimiser input snapshot, assignments, objective breakdown, and solver status.
-6. The UI compares the proposal with the baseline and asks the supervisor for explicit approval.
-7. IBM Bob can query safe MCP tools for explanations and summaries; it cannot approve or execute operational changes.
+1. The supervisor opens the dashboard. The browser requests summary, congestion, schedules, resources, and scenarios.
+2. FastAPI reads seeded data from PostgreSQL when available, otherwise generates deterministic synthetic data.
+3. The dashboard baseline engine calculates capacity pressure and risk buckets. Selecting a scenario recalculates that derived view without persisting the selection.
+4. On Congestion & Wait, the user selects a schedule or forecast window and submits a prediction request.
+5. The service constructs model features and calls the serialized trained model. The API returns actual inference output with model/data labels and contextual explanation factors.
+6. React displays waiting time or congestion slots. Missing model artifacts return HTTP 503 rather than fabricated predictions.
 
-## Security and Reliability
+## Planned modules and current limits
 
-- Secrets are provided only through environment variables and never committed.
-- The public repository contains `.env.example` files with non-secret development values.
-- Database credentials are not logged.
-- Pydantic validates API inputs; database constraints protect core invariants.
-- Consequential actions require explicit human confirmation.
-- Versioned model, feature, and optimiser snapshots keep recommendations reproducible.
+OR-Tools scheduling, alternate-port cost comparison, persisted plan generation/approval, and live IBM Bob MCP tools are not implemented. The optimizer, map, operations-plan, and Copilot interfaces use demonstration content. Plan confirmation changes browser state only. Copilot responses are predefined; no live LLM is connected. Explanation factors and displayed confidence are not a validated production uncertainty analysis.
 
-## MVP Scalability
+## Security and scalability
 
-The hackathon build is a modular monolith for one terminal. The solver uses a 30-minute planning grid and a strict time limit, which is sufficient for the small demonstration scenario. The architecture deliberately avoids microservices, Kafka, and Kubernetes because they add operational complexity without improving the proof of concept.
+Environment examples contain dummy development values; real `.env`, dependencies, and build caches are ignored. API input validation and CORS are configured. This is a local single-terminal prototype without production authentication or operational dispatch. The optional database check targets localhost:5432; remote database discovery is not validated. Larger workloads, model calibration, and production deployment require separate testing.

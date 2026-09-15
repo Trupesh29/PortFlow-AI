@@ -37,7 +37,8 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r backend\requirements.txt
 Copy-Item backend\.env.example backend\.env
-python -m uvicorn backend.app.main:app --reload --port 8000
+python -m ml.train
+python -m uvicorn backend.app.main:app --env-file backend/.env --reload --port 8000
 
 # Frontend (separate terminal)
 cd src\frontend
@@ -65,7 +66,7 @@ npm run dev
 cd src
 python -m pytest backend/tests -v -m "not integration"
 
-# Frontend component & integration tests (5 passed)
+# Frontend component & integration tests (10 passed)
 cd src\frontend
 npm test
 
@@ -76,4 +77,4 @@ npm run build
 
 ## Synthetic Data & Heuristic Baseline Notice
 
-All demonstration records are synthetic. Congestion forecasts are calculated deterministically using `baseline_rule_v1` without claiming machine learning or statistical confidence.
+All demonstration records are synthetic. The dashboard uses `baseline_rule_v1`; the Congestion & Wait page calls trained ML models. Neither is validated for real-port use. Optimizer, map, plan, and Copilot interfaces use static demo content.

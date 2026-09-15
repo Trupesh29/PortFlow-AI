@@ -77,7 +77,7 @@ export const OperationalHeader: React.FC<OperationalHeaderProps> = ({
           )}
 
           {/* Baseline Rule Method Label */}
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-medium" title="Temporary deterministic rule calculation pending ML training">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-medium" title="Dashboard baseline calculation; trained ML predictions are on Congestion & Wait">
             <Terminal className="w-3.5 h-3.5 text-purple-400" />
             <span>Method: <code className="font-mono text-[11px] text-purple-200">{calculationMethod}</code></span>
           </div>

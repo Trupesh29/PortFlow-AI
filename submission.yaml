@@ -4,9 +4,15 @@ team:
   name: "PortFlow AI"
   track: "AI"
   lead:
-    name: "Trupesh"
-    email: "trupeshhingrajiya599@gmail.com"
-  members: []
+    name: "Deep Makwana"
+    email: "" # Required: awaiting Deep's confirmed submission email.
+  members:
+    - name: "Manav Kansagara"
+      email: "" # Awaiting confirmation.
+    - name: "Smit Kansagara"
+      email: "" # Awaiting confirmation.
+    - name: "Trupesh Hingrajiya"
+      email: "trupeshhingrajiya599@gmail.com"
 
 submission:
   title: "PortFlow AI - Container Congestion Predictor and Port Operations Optimiser"
@@ -17,28 +23,28 @@ submission:
     congestion is often recognised only after queues and costly delays form.
 
   solution_summary: >
-    PortFlow AI converts schedule and terminal-capacity data into a 72-hour
-    congestion forecast and a constraint-aware berth-and-crane plan, with
-    explainable recommendations and explicit supervisor approval.
+    PortFlow AI calculates a 72-hour baseline congestion view, simulates five
+    operational scenarios, and serves trained ML congestion and waiting-time
+    predictions. Static planning interfaces demonstrate the intended supervisor
+    workflow; runtime optimisation and live Copilot integration are future work.
 
   key_features:
-    - "72-hour congestion-risk and vessel waiting-time prediction"
-    - "Joint berth-and-crane optimisation with operational constraints"
-    - "Before-and-after wait-time and utilisation comparison"
-    - "Human-approved alternate-port and operations-plan workflow"
-    - "IBM Bob task evidence and MCP-accessible operational explanations"
+    - "Interactive 72-hour baseline congestion dashboard"
+    - "Five reproducible operational scenario simulations"
+    - "Trained ML vessel waiting-time and congestion predictions"
+    - "API-backed schedules and berth/crane resources"
+    - "Static demo of supervisor operations-plan review and confirmation"
 
   tech_stack:
     languages: ["Python", "TypeScript"]
     frameworks: ["FastAPI", "React", "Vite", "Tailwind CSS"]
-    ibm_technologies: ["IBM Bob", "Model Context Protocol"]
+    ibm_technologies: ["IBM Bob (development use reported by team; evidence pending)"]
     databases: ["PostgreSQL"]
-    other: ["OR-Tools CP-SAT", "scikit-learn", "GitHub Actions"]
+    other: ["scikit-learn", "joblib", "NumPy", "GitHub Actions"]
 
   what_we_are_most_proud_of: >
-    PortFlow AI links prediction to a feasible operational action, quantifies
-    the expected improvement, and keeps consequential decisions under explicit
-    human control.
+    The reproducible scenario dashboard and trained prediction endpoints produce
+    actual outputs from synthetic inputs, with clear model and data disclosures.
 
   known_limitations: >
     The OR-Tools CP-SAT optimizer and IBM Bob MCP tools are not yet implemented;

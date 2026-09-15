@@ -27,7 +27,7 @@ export const HonestDisclaimers: React.FC = () => {
           <div>
             <span className="font-semibold text-purple-300 block mb-0.5">Baseline Rule Engine (<code className="text-purple-200">baseline_rule_v1</code>)</span>
             <p className="text-slate-400 text-[11px] leading-relaxed">
-              Congestion risk and queues are computed using transparent deterministic 6-hour capacity formulas. Full machine learning models are pending Phase 7.
+              This dashboard uses transparent deterministic 6-hour capacity formulas. Trained machine learning predictions are available on the Congestion &amp; Wait page.
             </p>
           </div>
         </div>
