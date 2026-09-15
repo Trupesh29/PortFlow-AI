@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bot, User, Sparkles, Database, Code2, MessageSquare, ArrowRight } from 'lucide-react';
+import { Bot, Sparkles, Database, Code2, MessageSquare, ArrowRight } from 'lucide-react';
 
 interface ChatMessage {
   id: string;

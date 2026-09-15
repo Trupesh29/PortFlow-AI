@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CalendarCheck2, CheckCircle2, XCircle, AlertTriangle, Clock, ArrowRight, ShieldCheck, HelpCircle, Ship } from 'lucide-react';
+import { CheckCircle2, XCircle, AlertTriangle, ShieldCheck, HelpCircle, Ship } from 'lucide-react';
 
 type PlanState = 'proposed' | 'approved' | 'rejected';
 
