@@ -20,10 +20,10 @@ export const OptimizerPage: React.FC = () => {
             <div className="p-4 space-y-4">
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">Planning Horizon</label>
-                <select className="w-full text-sm border-slate-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white border p-2">
+                <select defaultValue="72 hours" className="w-full text-sm border-slate-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white border p-2">
                   <option>24 hours</option>
                   <option>48 hours</option>
-                  <option selected>72 hours</option>
+                  <option>72 hours</option>
                   <option>96 hours</option>
                 </select>
               </div>

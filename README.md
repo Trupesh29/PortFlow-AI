@@ -31,7 +31,22 @@ PortFlow AI turns vessel schedules and terminal-capacity data into an actionable
 
 ## Current Build Status
 
-The repository currently contains the contract-first architecture, a working FastAPI health endpoint, and a responsive React operations shell. Prediction, optimisation, production data persistence, and the MCP tool implementation remain in progress and must not yet be represented as complete in the demo.
+The repository contains the contract-first architecture, a working FastAPI backend, and a fully functional React operations shell.
+
+| Component | Status |
+|---|---|
+| FastAPI backend + health endpoint | ✅ Complete |
+| React dashboard with 5 scenario simulator | ✅ Complete |
+| 72-hour baseline congestion forecast (`baseline_rule_v1`) | ✅ Complete |
+| ML waiting-time prediction (GradientBoostingRegressor) | ✅ Complete |
+| ML congestion prediction (GradientBoostingClassifier) | ✅ Complete |
+| Berth/crane resources and vessel schedules APIs | ✅ Complete |
+| Operations Plan approval workflow (UI) | ✅ Complete (static demo) |
+| Joint Berth & Crane Optimizer (UI) | ✅ Complete (static demo) |
+| OR-Tools CP-SAT runtime optimizer | 🔄 Not implemented |
+| IBM Bob MCP tool server | 🔄 Not implemented |
+| PostgreSQL production data persistence | 🔄 Optional (synthetic fallback active) |
+| Demo video | ⏳ Pending recording |
 
 ## Tech Stack
 
@@ -115,10 +130,11 @@ For prerequisites, tests, environment variables, and troubleshooting, see [docs/
 
 ## Known Limitations
 
-- The repository is in active hackathon development; the ML model and optimiser are not implemented yet.
-- Demo data will be synthetic and reproducible because no confidential or client port data is used.
+- The OR-Tools CP-SAT berth/crane optimizer and IBM Bob MCP tools are not implemented; the Optimizer and Operations Plan pages show a static demo.
+- Demo data is entirely synthetic and reproducible (seed 2026); no confidential or client port data is used.
 - The MVP targets one terminal and does not ingest live AIS or IoT feeds.
-- Routing and plan approval always require a human decision.
+- Plan approval and routing changes always require an explicit human decision.
+- PostgreSQL is optional; the application falls back to synthetic data when the database is unavailable.
 
 ## What We Are Most Proud Of
 

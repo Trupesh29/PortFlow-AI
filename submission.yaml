@@ -41,9 +41,11 @@ submission:
     human control.
 
   known_limitations: >
-    The current build is a repository and application skeleton. The ML model,
-    optimiser, database schema, complete MCP tools, deployment, demo video, and
-    screenshots remain in progress. Demo data will be synthetic and reproducible.
+    The OR-Tools CP-SAT optimizer and IBM Bob MCP tools are not yet implemented;
+    those pages show a static demo. All data is synthetic and reproducible (seed
+    2026). The system targets one terminal and does not ingest live AIS feeds.
+    PostgreSQL is optional; the app falls back to synthetic data without it.
+    Demo video and live deployment pending.
 
 artifacts:
   source_code: "src/"

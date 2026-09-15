@@ -19,9 +19,9 @@ src/
 │   │   ├── pages/      Live operations dashboard page
 │   │   └── api/        Typed API client
 │   └── src/test/     Vitest + Testing Library test suite
-├── ml/               Training scripts and inference pipeline (pending Phase 7)
-├── optimizer/        OR-Tools CP-SAT berth/crane solver (pending Phase 8)
-├── mcp-server/       IBM Bob MCP tool definitions (pending Phase 9)
+├── ml/               Training scripts, inference pipeline, and trained model artifacts
+├── optimizer/        OR-Tools CP-SAT berth/crane solver (not implemented)
+├── mcp-server/       IBM Bob MCP tool definitions (not implemented)
 ├── data/             Synthetic data generator and seed files
 └── tests/            Cross-component integration tests
 ```
@@ -55,11 +55,13 @@ npm run dev
 - `GET /resources/berths`: Berth dimensions, draft limits, and availability.
 - `GET /resources/cranes`: Crane throughputs and assignment status.
 - `GET /scenarios`: Synthetic operational scenarios (`baseline`, `arrival_surge`, `crane_outage`, `berth_closure`, `handling_slowdown`).
+- `POST /predictions/waiting-time`: ML waiting-time prediction (GradientBoostingRegressor, MAE ≈23 min).
+- `POST /predictions/congestion`: ML congestion probability prediction (GradientBoostingClassifier, ROC-AUC 0.79).
 
 ## Testing and Verification
 
 ```powershell
-# Backend unit & API tests (17 passed)
+# Backend unit & API tests (24 passed)
 cd src
 python -m pytest backend/tests -v -m "not integration"
 
