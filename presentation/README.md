@@ -1,5 +1,7 @@
 # Submission presentation
 
+Latest supplied presentation: PortFlow_AI_Command_Center.pptx (10 slides), retained unchanged. Its matching explanation and two-person narration are in ../demo/command-center-recording-script.md. This reference deck includes proposed solver/routing/MCP illustrations; the script distinguishes them from current implementation. slides.pptx below remains the corrected submission deck.
+
 slides.pptx is the edited version of the supplied 11-slide deck, preserving its original artwork and layouts. Editable PowerPoint text overlays correct team details, placeholder links, stack labels, and unsupported solver/MCP/production claims. Presenter notes and demo/recording-script.md contain the two-person handover and timings.
 
 Slides 6–7 record team-reported IBM Bob development use and disclose that live MCP integration is planned. Genuine task evidence is pending. Add exact tasks only with confirmed actual Bob work and matching evidence. Team names are Deep Makwana (lead), Manav Kansagara, Smit Kansagara, and Trupesh Hingrajiya.
